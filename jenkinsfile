@@ -1,25 +1,31 @@
 pipeline {
     agent any
-    
     stages {
-        stage('Clonar Repositorio') {
+        stage('Check Connectivity') {
             steps {
-                git branch: 'main', credentialsId: 'ID_DE_TUS_CREDENCIALES', url: 'https://github.com/grupodtrabajo/proyecto.git'
+                script {
+                    def connected = sh(script: "ping -c 1 google.com", returnStatus: true)
+                    if (connected == 0) {
+                        echo "Connected to the internet"
+                    } else {
+                        error "Not connected to the internet"
+                    }
+                }
             }
         }
-        stage('Verificar Conexión') {
+        stage('Build') {
             steps {
-                sh 'echo "La conexión con Git funciona correctamente"'
+                // Aquí van los pasos para construir tu proyecto
             }
         }
-        stage('Verificar Estado del Repositorio') {
+        stage('Test') {
             steps {
-                sh 'git status'
+                // Aquí van los pasos para ejecutar pruebas
             }
         }
-        stage('Tareas adicionales') {
+        stage('Deploy') {
             steps {
-                // Aquí puedes agregar cualquier tarea adicional que necesites ejecutar
+                // Aquí van los pasos para implementar tu proyecto
             }
         }
     }
