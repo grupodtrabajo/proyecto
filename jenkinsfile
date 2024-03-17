@@ -1,31 +1,22 @@
 pipeline {
     agent any
     stages {
-        stage('Check Connectivity') {
-            steps {
-                script {
-                    def connected = sh(script: "ping -c 1 google.com", returnStatus: true)
-                    if (connected == 0) {
-                        echo "Connected to the internet"
-                    } else {
-                        error "Not connected to the internet"
-                    }
-                }
-            }
-        }
         stage('Build') {
             steps {
-                // Aquí van los pasos para construir tu proyecto
+                // Pasos para la etapa de construcción
+                echo 'Construyendo...'
             }
         }
         stage('Test') {
             steps {
-                // Aquí van los pasos para ejecutar pruebas
+                // Pasos para la etapa de pruebas
+                echo 'Ejecutando pruebas...'
             }
         }
         stage('Deploy') {
             steps {
-                // Aquí van los pasos para implementar tu proyecto
+                // Pasos para la etapa de implementación
+                echo 'Implementando...'
             }
         }
     }
