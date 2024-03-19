@@ -1,46 +1,29 @@
 pipeline {
     agent any
+
     stages {
-        stage('Check Jenkins Connectivity') {
+        stage('Check Connections') {
             steps {
                 script {
-                    try {
-                        sh "ping -c 1 jenkins.example.com" // Cambia jenkins.example.com por el dominio de tu servidor Jenkins
-                        echo "Conexión exitosa con Jenkins"
-                    } catch (Exception e) {
-                        error "No se pudo establecer conexión con Jenkins"
+                    def services = [
+                        'mi_nginx_nuevo:8080',
+                        'sonarqube2:9000',
+                        'my_container:latest',
+                        'temp-container:latest',
+                        'ping-container:latest',
+                        'wonderful_goldberg:80',
+                        'confident_shamir:80',
+                        'owasp-zap:latest',
+                        'jenkins:8081',
+                        'nginx:8082'
+                    ]
+
+                    for (service in services) {
+                        def serviceName = service.split(':')[0]
+                        def port = service.split(':')[1]
+                        sh "nc -zv $serviceName $port"
                     }
                 }
-            }
-        }
-        stage('Check NGINX Connectivity') {
-            steps {
-                script {
-                    try {
-                        sh "curl -Is http://nginx.example.com | head -n 1" // Cambia nginx.example.com por el dominio de tu servidor NGINX
-                        echo "Conexión exitosa con NGINX"
-                    } catch (Exception e) {
-                        error "No se pudo establecer conexión con NGINX"
-                    }
-                }
-            }
-        }
-        stage('Build') {
-            steps {
-                // Pasos para la etapa de construcción
-                echo 'Construyendo...'
-            }
-        }
-        stage('Test') {
-            steps {
-                // Pasos para la etapa de pruebas
-                echo 'Ejecutando pruebas12...'
-            }
-        }
-        stage('Deploy') {
-            steps {
-                // Pasos para la etapa de implementación
-                echo 'Implementando...'
             }
         }
     }
