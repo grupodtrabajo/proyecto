@@ -2,29 +2,56 @@ pipeline {
     agent any
 
     stages {
-        stage('Check Connections') {
+        stage('Check mi_nginx_nuevo Connection') {
             steps {
-                script {
-                    def services = [
-                        'mi_nginx_nuevo:8080',
-                        'sonarqube2:9000',
-                        'my_container:latest',
-                        'temp-container:latest',
-                        'ping-container:latest',
-                        'wonderful_goldberg:80',
-                        'confident_shamir:80',
-                        'owasp-zap:latest',
-                        'jenkins:8081',
-                        'nginx:8082'
-                    ]
-
-                    for (service in services) {
-                        def serviceName = service.split(':')[0]
-                        def port = service.split(':')[1]
-                        sh "nc -zv $serviceName $port"
-                    }
-                }
+                sh "nc -zv mi_nginx_nuevo 8080"
+            }
+        }
+        stage('Check sonarqube2 Connection') {
+            steps {
+                sh "nc -zv sonarqube2 9000"
+            }
+        }
+        stage('Check my_container Connection') {
+            steps {
+                sh "nc -zv my_container <insert_port_number>"
+            }
+        }
+        stage('Check temp-container Connection') {
+            steps {
+                sh "nc -zv temp-container <insert_port_number>"
+            }
+        }
+        stage('Check ping-container Connection') {
+            steps {
+                sh "nc -zv ping-container <insert_port_number>"
+            }
+        }
+        stage('Check wonderful_goldberg Connection') {
+            steps {
+                sh "nc -zv wonderful_goldberg 80"
+            }
+        }
+        stage('Check confident_shamir Connection') {
+            steps {
+                sh "nc -zv confident_shamir 80"
+            }
+        }
+        stage('Check owasp-zap Connection') {
+            steps {
+                sh "nc -zv owasp-zap <insert_port_number>"
+            }
+        }
+        stage('Check jenkins Connection') {
+            steps {
+                sh "nc -zv jenkins 8081"
+            }
+        }
+        stage('Check nginx Connection') {
+            steps {
+                sh "nc -zv nginx 8082"
             }
         }
     }
 }
+
