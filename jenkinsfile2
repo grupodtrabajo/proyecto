@@ -1,0 +1,35 @@
+pipeline {
+    agent any
+
+    stages {
+        stage('Configure NGINX') {
+            steps {
+                script {
+                    sh '''
+                    # Copiar los archivos HTML a la carpeta de NGINX
+                    sudo cp /home/sneyder/Desktop/html/index.html /usr/share/nginx/html/
+                    sudo cp /home/sneyder/Desktop/html/productos.html /usr/share/nginx/html/
+
+                    # Configurar NGINX para utilizar los archivos HTML
+                    sudo rm /etc/nginx/sites-available/default
+                    sudo touch /etc/nginx/sites-available/default
+                    sudo bash -c 'echo "server {
+                        listen 80 default_server;
+                        listen [::]:80 default_server;
+
+                        root /usr/share/nginx/html;
+                        index index.html;
+
+                        location / {
+                            try_files $uri $uri/ =404;
+                        }
+                    }" > /etc/nginx/sites-available/default'
+
+                    # Reiniciar NGINX
+                    sudo systemctl restart nginx
+                    '''
+                }
+            }
+        }
+    }
+}
