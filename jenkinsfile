@@ -4,54 +4,53 @@ pipeline {
     stages {
         stage('Check mi_nginx_nuevo Connection') {
             steps {
-                sh "nc -zv mi_nginx_nuevo 8080"
+                sh "curl -IsS http://mi_nginx_nuevo:80"
             }
         }
         stage('Check sonarqube2 Connection') {
             steps {
-                sh "nc -zv sonarqube2 9000"
+                sh "curl -IsS http://sonarqube2:9000"
             }
         }
         stage('Check my_container Connection') {
             steps {
-                sh "nc -zv my_container <insert_port_number>"
+                sh "curl -IsS http://my_container"
             }
         }
         stage('Check temp-container Connection') {
             steps {
-                sh "nc -zv temp-container <insert_port_number>"
+                sh "curl -IsS http://temp-container"
             }
         }
         stage('Check ping-container Connection') {
             steps {
-                sh "nc -zv ping-container <insert_port_number>"
+                sh "curl -IsS http://ping-container"
             }
         }
         stage('Check wonderful_goldberg Connection') {
             steps {
-                sh "nc -zv wonderful_goldberg 80"
+                sh "curl -IsS http://wonderful_goldberg:80"
             }
         }
         stage('Check confident_shamir Connection') {
             steps {
-                sh "nc -zv confident_shamir 80"
+                sh "curl -IsS http://confident_shamir:80"
             }
         }
         stage('Check owasp-zap Connection') {
             steps {
-                sh "nc -zv owasp-zap <insert_port_number>"
+                sh "curl -IsS http://owasp-zap"
             }
         }
         stage('Check jenkins Connection') {
             steps {
-                sh "nc -zv jenkins 8081"
+                sh "curl -IsS http://jenkins:8081"
             }
         }
         stage('Check nginx Connection') {
             steps {
-                sh "nc -zv nginx 8082"
+                sh "curl -IsS http://nginx:80"
             }
         }
     }
 }
-
