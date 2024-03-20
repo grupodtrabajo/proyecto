@@ -2,7 +2,7 @@ pipeline {
     agent any
 
     stages {
-        stage('Check sonarqube2 Connection') {
+        stage('Check sonarqube2 Connection,  ') {
             steps {
                 sh "curl -IsS http://desktop_sonarqube2_1:9000"
             }
