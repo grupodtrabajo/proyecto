@@ -2,9 +2,16 @@ pipeline {
     agent any
 
     stages {
-        stage('Check sonarqube2 Connection,  ') {
+        stage('Check SonarQube Connection') {
             steps {
-                sh "curl -IsS http://desktop_sonarqube2_1:9000"
+                script {
+                    def response = sh(script: "curl -IsS http://localhost:9000/", returnStatus: true)
+                    if (response == 0) {
+                        echo "Conexión exitosa a SonarQube en http://localhost:9000/"
+                    } else {
+                        error "No se pudo conectar a SonarQube en http://localhost:9000/"
+                    }
+                }
             }
         }
     }
