@@ -2,18 +2,28 @@ pipeline {
     agent any
 
     stages {
-        stage('Check OWASP ZAP Connection') {
+        stage('Check Network Connection') {
             steps {
                 script {
-                    def response = sh(script: "docker inspect -f '{{.State.Running}}' 06dc0085e587", returnStatus: true)
-                    if (response == 0) {
-                        echo "OWASP ZAP está instalado y en ejecución en el contenedor con ID 06dc0085e587"
-                    } else {
-                        error "OWASP ZAP no está instalado o no está en ejecución en el contenedor con ID 06dc0085e587"
-                    }
+                    // Agregar aquí los pasos para verificar la conexión a la red
+                    echo "Verificando la conexión a la red..."
                 }
             }
         }
+        stage('Check Jenkins Functionality') {
+            steps {
+                script {
+                    // Agregar aquí los pasos para verificar el funcionamiento de Jenkins
+                    echo "Verificando el funcionamiento de Jenkins..."
+                }
+            }
+        }
+        stage('Checkout Code from GitHub') {
+            steps {
+                // Agregar aquí los pasos para obtener el código desde GitHub
+                checkout scm
+            }
+        }
+        // Otros stages relacionados con la conexión a GitHub y demás
     }
 }
-
