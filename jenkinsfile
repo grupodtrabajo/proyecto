@@ -5,7 +5,7 @@ pipeline {
         stage('Check SonarQube Connection') {
             steps {
                 script {
-                    def response = sh(script: "curl -IsS http://localhost:9000/", returnStatus: true)
+                    def response = sh(script: "curl -IsS -u squ_d02ae556436a895ba202b8adeb89a0844d253c4e: http://localhost:9000/api/system/status", returnStatus: true)
                     if (response == 0) {
                         echo "Conexión exitosa a SonarQube en http://localhost:9000/"
                     } else {
@@ -16,3 +16,4 @@ pipeline {
         }
     }
 }
+
