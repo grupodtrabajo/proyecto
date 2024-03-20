@@ -1,29 +1,15 @@
-pipeline {
-    agent any
-
-    stages {
-        stage('Check Network Connection') {
-            steps {
-                script {
-                    // Agregar aquí los pasos para verificar la conexión a la red
-                    echo "Verificando la conexión a la red..."
+stage('Check Container Connectivity') {
+    steps {
+        script {
+            def containers = ['a9dff59353f2', '6c49fdd6b2b4', '840e50f48849', '06dc0085e587', 'bc6245dadbe2']
+            for (container in containers) {
+                def response = sh(script: "docker inspect -f '{{.State.Running}}' ${container}", returnStatus: true)
+                if (response == 0) {
+                    echo "El contenedor con ID ${container} está en ejecución"
+                } else {
+                    error "El contenedor con ID ${container} no está en ejecución"
                 }
             }
         }
-        stage('Check Jenkins Functionality') {
-            steps {
-                script {
-                    // Agregar aquí los pasos para verificar el funcionamiento de Jenkins
-                    echo "Verificando el funcionamiento de Jenkins..."
-                }
-            }
-        }
-        stage('Checkout Code from GitHub') {
-            steps {
-                // Agregar aquí los pasos para obtener el código desde GitHub
-                checkout scm
-            }
-        }
-        // Otros stages relacionados con la conexión a GitHub y demás
     }
 }
