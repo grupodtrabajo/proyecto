@@ -2,14 +2,14 @@ pipeline {
     agent any
 
     stages {
-        stage('Check SonarQube Connection') {
+        stage('Check OWASP ZAP Connection') {
             steps {
                 script {
-                    def response = sh(script: "docker inspect -f '{{.State.Running}}' 6c49fdd6b2b4", returnStatus: true)
+                    def response = sh(script: "docker inspect -f '{{.State.Running}}' 06dc0085e587", returnStatus: true)
                     if (response == 0) {
-                        echo "SonarQube está instalado y en ejecución en el contenedor con ID 6c49fdd6b2b4"
+                        echo "OWASP ZAP está instalado y en ejecución en el contenedor con ID 06dc0085e587"
                     } else {
-                        error "SonarQube no está instalado o no está en ejecución en el contenedor con ID 6c49fdd6b2b4"
+                        error "OWASP ZAP no está instalado o no está en ejecución en el contenedor con ID 06dc0085e587"
                     }
                 }
             }
