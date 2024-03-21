@@ -6,7 +6,7 @@ pipeline {
             steps {
                 script {
                     // Agregar aquí los pasos para verificar la conexión a la red
-                    echo "Verificando la conexión a la red..."
+                    echo "Verificando la conexión a la red0.."
                 }
             }
         }
